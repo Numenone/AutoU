@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Classificador de Emails IA{% endblock %}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <style>
+        #video-background {
+            position: fixed;
+            right: 0;
+            bottom: 0;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            z-index: -1;
+            background-size: cover;
+            transition: filter 0.3s;
+            filter: brightness(1.0); /* Default for light mode */
+        }
+        .dark #video-background {
+            filter: brightness(0.6);
+        }
+        .glassmorphism {
+            /* Light mode styles */
+            background-color: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(12px) saturate(180%);
+            -webkit-backdrop-filter: blur(12px) saturate(180%);
+            border: 1px solid rgba(200, 200, 200, 0.3);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
+        }
+        .dark .glassmorphism {
+            /* Dark mode styles */
+            background-color: rgba(23, 23, 23, 0.6);
+            border: 1px solid rgba(70, 70, 70, 0.4);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
+        }
+    </style>
+    
+    <script>
+        tailwind.config = { darkMode: 'class' }
+    </script>
+    {% block head_extra %}{% endblock %}
+</head>
+<body class="min-h-screen p-4 relative transition-colors duration-300 bg-gray-100 dark:bg-gray-900 text-black dark:text-white">
+
+    <video autoplay muted loop id="video-background">
+        <source src="{{ url_for('static', filename='universe-background.mp4') }}" type="video/mp4">
+        Seu navegador não suporta vídeos HTML5.
+    </video>
+
+    <div class="fixed top-4 left-4 z-50">
+        <button id="theme-toggle" type="button" class="text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5">
+            <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+            <svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.707.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 5.05A1 1 0 003.636 6.464l.707.707a1 1 0 001.414-1.414l-.707-.707zM3 11a1 1 0 100-2H2a1 1 0 100 2h1zM6.464 16.364l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+        </button>
+    </div>
+
+    <main class="w-full min-h-screen flex flex-col items-center justify-center z-10 p-4">
+        {% block content %}{% endblock %}
+    </main>
+    
+    {% block scripts %}{% endblock %}
+
+    <!-- Theme logic is now handled in static/script.js -->
+</body>
+</html>

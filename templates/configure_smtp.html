@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block title %}Configurar SMTP - Classificador IA{% endblock %}
+
+{% block content %}
+<div class="max-w-3xl mx-auto">
+    <div class="glassmorphism rounded-xl p-8 space-y-6">
+        <h1 class="text-2xl font-bold text-center text-black dark:text-white">Configurar Envio de Email</h1>
+        <p class="text-sm text-center text-gray-600 dark:text-gray-300">Para que o app possa enviar emails em seu nome, você precisa fornecer uma "Senha de App" do Gmail.</p>
+        
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="p-3 rounded-md text-sm {{ 'bg-red-100 text-red-800 border-red-300 dark:bg-red-900/50 dark:text-red-300 dark:border-red-700' }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
+            <!-- Coluna da Esquerda: Passo a Passo -->
+            <div class="space-y-4">
+                <h2 class="text-lg font-semibold text-black dark:text-white">Como Gerar sua Senha de App</h2>
+                <ol class="list-decimal list-inside space-y-3 text-sm text-black dark:text-white">
+                    <li>
+                        Acesse a <a href="https://myaccount.google.com/security" target="_blank" class="text-blue-600 dark:text-blue-400 hover:underline">página de segurança</a> da sua Conta Google.
+                    </li>
+                    <li>
+                        Certifique-se que a <strong>"Verificação em 2 etapas"</strong> está ATIVADA. Este passo é obrigatório.
+                    </li>
+                    <li>
+                        Na mesma página, role para baixo e clique em <strong>"Senhas de app"</strong>.
+                    </li>
+                    <li>
+                        Em "Selecione o app", escolha <strong>"E-mail"</strong>.
+                    </li>
+                     <li>
+                        Em "Selecione o dispositivo", escolha <strong>"Outro <i>(nome personalizado)</i>"</strong>.
+                    </li>
+                    <li>
+                        Dê um nome fácil de lembrar (ex: "App Classificador Python") e clique em <strong>"Gerar"</strong>.
+                    </li>
+                    <li>
+                        O Google mostrará uma senha de 16 letras. <strong>Copie este valor</strong> e cole no campo "Senha de App" ao lado.
+                    </li>
+                </ol>
+            </div>
+
+            <!-- Coluna da Direita: Formulário -->
+            <div class="space-y-4">
+                <h2 class="text-lg font-semibold text-black dark:text-white">Suas Credenciais</h2>
+                <form method="POST" action="{{ url_for('configure_smtp') }}" class="space-y-4">
+                    <div>
+                        <label for="gmail_email" class="block mb-2 text-sm font-medium text-black dark:text-white">Seu Email do Gmail</label>
+                        <input type="email" name="gmail_email" id="gmail_email" placeholder="exemplo@gmail.com" class="flex w-full rounded-md border border-gray-300 dark:border-gray-600 bg-white/50 dark:bg-black/30 px-3 py-2 text-sm shadow-inner placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 text-black dark:text-white" required>
+                    </div>
+                    
+                    <div>
+                        <label for="gmail_app_password" class="block mb-2 text-sm font-medium text-black dark:text-white">Senha de App do Gmail</label>
+                        <input type="password" name="gmail_app_password" id="gmail_app_password" placeholder="xxxx xxxx xxxx xxxx" class="flex w-full rounded-md border border-gray-300 dark:border-gray-600 bg-white/50 dark:bg-black/30 px-3 py-2 text-sm shadow-inner placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 text-black dark:text-white" required>
+                    </div>
+                    
+                    <button type="submit" class="inline-flex items-center justify-center rounded-md text-sm font-medium h-10 px-4 py-2 w-full bg-green-600 text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 focus:ring-offset-gray-100 dark:focus:ring-offset-gray-900 transition-colors">
+                        Salvar e Ir para o App
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
