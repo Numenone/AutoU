@@ -317,14 +317,14 @@ def get_stats():
     cat_data = db.session.query(Classification.category, db.func.count(Classification.id)).filter_by(user_id=current_user.id).group_by(Classification.category).all()
     stats["categories"] = {cat: count for cat, count in cat_data}
     
-    # Monthly counts (last 6 months)
+    # Monthly counts (last 6 months) - Using to_char for PostgreSQL
     six_months_ago = datetime.datetime.utcnow() - datetime.timedelta(days=180)
-    month_data = db.session.query(db.func.strftime('%Y-%m', Classification.timestamp), db.func.count(Classification.id)).filter(Classification.user_id == current_user.id, Classification.timestamp >= six_months_ago).group_by(db.func.strftime('%Y-%m', Classification.timestamp)).all()
+    month_data = db.session.query(db.func.to_char(Classification.timestamp, 'YYYY-MM'), db.func.count(Classification.id)).filter(Classification.user_id == current_user.id, Classification.timestamp >= six_months_ago).group_by(db.func.to_char(Classification.timestamp, 'YYYY-MM')).all()
     stats["monthly"] = {month: count for month, count in month_data}
 
-    # Daily counts (last 7 days)
+    # Daily counts (last 7 days) - Using to_char for PostgreSQL
     seven_days_ago = datetime.datetime.utcnow() - datetime.timedelta(days=7)
-    day_data = db.session.query(db.func.strftime('%Y-%m-%d', Classification.timestamp), db.func.count(Classification.id)).filter(Classification.user_id == current_user.id, Classification.timestamp >= seven_days_ago).group_by(db.func.strftime('%Y-%m-%d', Classification.timestamp)).all()
+    day_data = db.session.query(db.func.to_char(Classification.timestamp, 'YYYY-MM-DD'), db.func.count(Classification.id)).filter(Classification.user_id == current_user.id, Classification.timestamp >= seven_days_ago).group_by(db.func.to_char(Classification.timestamp, 'YYYY-MM-DD')).all()
     stats["daily"] = {day: count for day, count in day_data}
     
     # Sent email count
