@@ -1,6 +1,6 @@
 # AutoU - Classificador Inteligente de Emails
 
-**# AutoU Interface **
+# AutoU Interface 
 
 ## 🚀 Sobre o Projeto
 
