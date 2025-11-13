@@ -1,6 +1,6 @@
 # AutoU - Classificador Inteligente de Emails
 
-![AutoU Interface](https://i.imgur.com/PAST21l.png)
+![AutoU Interface][(https://imgur.com/a/pA5GSLk))]
 
 ## 🚀 Sobre o Projeto
 
